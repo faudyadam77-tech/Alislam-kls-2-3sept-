@@ -14,6 +14,14 @@
   }
   .container { max-width: 900px; margin: 0 auto; }
   
+  /* Font khusus Arab */
+  .arabic {
+    font-family: 'Arabic Typesetting', 'Traditional Arabic', 'Simplified Arabic', 'Amiri', serif;
+    font-size: 1.4em;
+    font-weight: normal;
+    line-height: 1.6;
+  }
+
   /* Header */
   .header {
     background: linear-gradient(135deg, #ff6b9d, #ffa500);
@@ -106,16 +114,17 @@
   .materi-card li:last-child { border: none; }
   .materi-card li::before { content: "✨ "; }
 
-  /* Soal Section */
-  .soal-section {
+  /* Quiz Section */
+  .quiz-section {
     background: white;
     padding: 25px;
     border-radius: 20px;
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     margin-bottom: 20px;
     border: 4px solid #ffd166;
+    display: none;
   }
-  .soal-section h2 {
+  .quiz-section h2 {
     text-align: center;
     color: #ff6b9d;
     margin-bottom: 15px;
@@ -129,63 +138,6 @@
     margin-bottom: 20px;
     font-size: 1em;
     color: #856404;
-  }
-  .matching-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-  }
-  .kolom { display: flex; flex-direction: column; gap: 10px; }
-  .kolom-title {
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.1em;
-    padding: 8px;
-    border-radius: 10px;
-    color: white;
-  }
-  .kolom-kiri .kolom-title { background: #ff6b9d; }
-  .kolom-kanan .kolom-title { background: #118ab2; }
-  
-  .item {
-    padding: 12px 15px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 0.95em;
-    text-align: center;
-    transition: all 0.2s;
-    border: 3px solid transparent;
-    user-select: none;
-  }
-  .kolom-kiri .item { background: #ffe0ec; color: #c2185b; }
-  .kolom-kanan .item { background: #d4f1ff; color: #01579b; }
-  .item:hover { transform: scale(1.03); }
-  .item.selected {
-    border-color: #ffd166;
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(255,209,102,0.5);
-  }
-  .item.matched {
-    background: #06d6a0 !important;
-    color: white !important;
-    border-color: #04a076;
-    cursor: default;
-    animation: pop 0.4s;
-  }
-  .item.wrong {
-    background: #ff4757 !important;
-    color: white !important;
-    animation: shake 0.4s;
-  }
-  @keyframes pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-  }
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    75% { transform: translateX(8px); }
   }
 
   /* Progress */
@@ -217,22 +169,71 @@
     font-size: 0.85em;
   }
 
-  .btn-selesai {
-    display: block;
-    margin: 20px auto;
-    background: linear-gradient(135deg, #ff6b9d, #ffa500);
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    font-size: 1.2em;
+  /* Soal Card */
+  .soal-card {
+    background: linear-gradient(135deg, #fff4cc, #ffe0ec);
+    padding: 20px;
     border-radius: 20px;
-    cursor: pointer;
-    font-weight: 700;
-    box-shadow: 0 6px 15px rgba(255,107,157,0.4);
-    transition: transform 0.2s;
+    margin-bottom: 20px;
+    border: 3px solid #ffa500;
+    animation: slideIn 0.4s;
   }
-  .btn-selesai:hover { transform: scale(1.05); }
-  .btn-selesai:disabled { opacity: 0.5; cursor: not-allowed; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .soal-label {
+    font-size: 0.9em;
+    color: #856404;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .soal-teks {
+    font-size: 1.3em;
+    color: #c2185b;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px;
+  }
+
+  /* Pilihan Jawaban */
+  .pilihan-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .pilihan {
+    padding: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+    transition: all 0.2s;
+    border: 3px solid transparent;
+    user-select: none;
+    background: #d4f1ff;
+    color: #01579b;
+    font-weight: 600;
+  }
+  .pilihan:hover {
+    transform: scale(1.05);
+    border-color: #ffd166;
+    box-shadow: 0 4px 10px rgba(255,209,102,0.5);
+  }
+  .pilihan:active {
+    transform: scale(0.98);
+  }
+  .pilihan.selected {
+    background: #118ab2;
+    color: white;
+    border-color: #01579b;
+    animation: pop 0.3s;
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
 
   /* Modal Hasil */
   .modal {
@@ -278,8 +279,9 @@
 
   @media (max-width: 600px) {
     .header h1 { font-size: 1.4em; }
-    .matching-container { grid-template-columns: 1fr; }
-    .item { font-size: 0.85em; padding: 10px; }
+    .pilihan-container { grid-template-columns: 1fr; }
+    .pilihan { font-size: 0.9em; padding: 12px; }
+    .soal-teks { font-size: 1.1em; }
   }
 </style>
 </head>
@@ -288,16 +290,16 @@
 
   <!-- HEADER -->
   <div class="header">
-    <h1>🌟 Belajar Jujur, Disiplin & Amanah 🌟</h1>
+    <h1> Belajar Jujur, Disiplin & Amanah 🌟</h1>
     <p>Bab 3 - Al-Islam | Kelas 2 SD</p>
   </div>
 
   <!-- FORM NAMA -->
   <div class="name-box" id="nameBox">
-    <label>👋 Halo adik-adik! Siapa namamu?</label><br>
+    <label> Halo adik-adik! Siapa namamu?</label><br>
     <input type="text" id="namaSiswa" placeholder="Tulis namamu di sini...">
     <br>
-    <button class="btn-mulai" onclick="mulaiBelajar()"> Mulai Belajar!</button>
+    <button class="btn-mulai" onclick="mulaiBelajar()">🚀 Mulai Belajar!</button>
   </div>
 
   <!-- MATERI -->
@@ -305,11 +307,11 @@
     <div class="materi-grid">
       <div class="materi-card jujur">
         <div class="emoji">️</div>
-        <h3>JUJUR (Siddiq)</h3>
+        <h3>JUJUR (<span class="arabic">صِدِّيق</span>)</h3>
         <ul>
           <li>Berkata sesuai kenyataan</li>
           <li>Tidak boleh berbohong/dusta</li>
-          <li>Sifat Nabi Muhammad </li>
+          <li>Sifat Nabi Muhammad <span class="arabic">ﷺ</span></li>
           <li>Hidup jadi tenang & sukses</li>
         </ul>
       </div>
@@ -325,39 +327,38 @@
       </div>
       <div class="materi-card amanah">
         <div class="emoji"></div>
-        <h3>AMANAH (Al-Amin)</h3>
+        <h3>AMANAH (<span class="arabic">الأَمِين</span>)</h3>
         <ul>
           <li>Bisa dipercaya orang lain</li>
           <li>Tidak berkhianat</li>
-          <li>Gelar Nabi Muhammad ﷺ</li>
+          <li>Gelar Nabi Muhammad <span class="arabic">ﷺ</span></li>
           <li>Ada 3 macam: Allah, sesama, diri sendiri</li>
         </ul>
       </div>
     </div>
 
-    <!-- SOAL MENCOCOKKAN -->
-    <div class="soal-section">
-      <h2>🎯 Ayo Mencocokkan! 🎯</h2>
-      <div class="instruksi">
-        💡 <b>Cara main:</b> Klik 1 kotak di kiri, lalu klik pasangannya di kanan. Kalau benar, warnanya jadi hijau! 
-      </div>
-
-      <div class="progress-box">
-        <b>Progress:</b> <span id="progressText">0 / 10</span>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill">0%</div>
-        </div>
-      </div>
-
-      <div class="matching-container">
-        <div class="kolom kolom-kiri" id="kolomKiri"></div>
-        <div class="kolom kolom-kanan" id="kolomKanan"></div>
-      </div>
-
-      <button class="btn-selesai" id="btnSelesai" onclick="selesaiMengerjakan()" disabled>
-        📤 Kirim Jawaban & Lihat Nilai
+    <div style="text-align:center; margin: 20px 0;">
+      <button class="btn-mulai" onclick="mulaiKuis()" style="font-size:1.2em; padding:15px 40px;">
+        🎮 Mulai Kuis!
       </button>
     </div>
+  </div>
+
+  <!-- KUIS -->
+  <div class="quiz-section" id="quizSection">
+    <h2>🎯 Ayo Jawab Pertanyaan Berikut! 🎯</h2>
+    <div class="instruksi">
+      💡 <b>Cara main:</b> Pilih 1 jawaban yang paling tepat. Langsung lanjut ke soal berikutnya ya!
+    </div>
+
+    <div class="progress-box">
+      <b>Soal ke:</b> <span id="progressText">1 / 10</span>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill">10%</div>
+      </div>
+    </div>
+
+    <div id="soalContainer"></div>
   </div>
 
   <!-- MODAL HASIL -->
@@ -368,6 +369,7 @@
       <p>Nama: <b id="resultNama">-</b></p>
       <div class="nilai-display" id="resultNilai">0</div>
       <p id="resultPesan">Terus belajar ya!</p>
+      <p style="font-size:0.9em; color:#888;">Jawaban benar: <b id="resultBenar">0</b> / 10</p>
       <button class="btn-tutup" onclick="location.reload()">🔄 Main Lagi</button>
     </div>
   </div>
@@ -378,24 +380,64 @@
   // ============ KONFIGURASI ============
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPXCJfjWc3u3zIYCDJC_izuIMSUrSG0Oug_2KqeBVPrzNCL7k1xBPE36VQjBVtLnCkoA/exec";
 
-  // ============ DATA SOAL ============
-  const pasanganSoal = [
-    { kiri: "Jujur", kanan: "Berkata sesuai kenyataan" },
-    { kiri: "Siddiq", kanan: "Sifat jujur Nabi Muhammad ﷺ" },
-    { kiri: "Dusta", kanan: "Lawan kata jujur" },
-    { kiri: "Disiplin", kanan: "Patuh pada aturan" },
-    { kiri: "Tepat waktu", kanan: "Ciri sikap disiplin" },
-    { kiri: "Amanah", kanan: "Bisa dipercaya" },
-    { kiri: "Al-Amin", kanan: "Gelar Nabi Muhammad ﷺ" },
-    { kiri: "Khianat", kanan: "Lawan kata amanah" },
-    { kiri: "3 macam amanah", kanan: "Allah, sesama, diri sendiri" },
-    { kiri: "Manfaat disiplin", kanan: "Hidup teratur & berkarakter" }
+  // ============ DATA SOAL (1 soal + 4 pilihan, hanya 1 benar) ============
+  const daftarSoal = [
+    {
+      soal: "Berkata sesuai kenyataan",
+      pilihan: ["Jujur", "Disiplin", "Amanah", "Khianat"],
+      jawaban: "Jujur"
+    },
+    {
+      soal: "Sifat jujur Nabi Muhammad ﷺ",
+      pilihan: ["Siddiq", "Al-Amin", "Amanah", "Disiplin"],
+      jawaban: "Siddiq"
+    },
+    {
+      soal: "Lawan kata jujur",
+      pilihan: ["Dusta", "Khianat", "Disiplin", "Amanah"],
+      jawaban: "Dusta"
+    },
+    {
+      soal: "Patuh pada aturan",
+      pilihan: ["Disiplin", "Jujur", "Amanah", "Siddiq"],
+      jawaban: "Disiplin"
+    },
+    {
+      soal: "Ciri sikap disiplin",
+      pilihan: ["Tepat waktu", "Jujur", "Dusta", "Khianat"],
+      jawaban: "Tepat waktu"
+    },
+    {
+      soal: "Bisa dipercaya",
+      pilihan: ["Amanah", "Jujur", "Disiplin", "Dusta"],
+      jawaban: "Amanah"
+    },
+    {
+      soal: "Gelar Nabi Muhammad ﷺ",
+      pilihan: ["Al-Amin", "Siddiq", "Amanah", "Disiplin"],
+      jawaban: "Al-Amin"
+    },
+    {
+      soal: "Lawan kata amanah",
+      pilihan: ["Khianat", "Dusta", "Disiplin", "Jujur"],
+      jawaban: "Khianat"
+    },
+    {
+      soal: "Allah, sesama, diri sendiri",
+      pilihan: ["3 macam amanah", "Ciri disiplin", "Manfaat jujur", "Sifat Nabi"],
+      jawaban: "3 macam amanah"
+    },
+    {
+      soal: "Hidup teratur & berkarakter",
+      pilihan: ["Manfaat disiplin", "Manfaat jujur", "Manfaat amanah", "Lawan jujur"],
+      jawaban: "Manfaat disiplin"
+    }
   ];
 
-  let selectedItem = null;
-  let matchedCount = 0;
-  const totalSoal = pasanganSoal.length;
-  const jawabanSiswa = {};
+  let soalSekarang = 0;
+  let jumlahBenar = 0;
+  const totalSoal = daftarSoal.length;
+  const jawabanSiswa = [];
 
   // ============ FUNGSI ============
   function mulaiBelajar() {
@@ -406,7 +448,12 @@
     }
     document.getElementById('nameBox').style.display = 'none';
     document.getElementById('materiSection').style.display = 'block';
-    setupSoal();
+  }
+
+  function mulaiKuis() {
+    document.getElementById('materiSection').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
+    tampilkanSoal();
   }
 
   function shuffle(arr) {
@@ -418,99 +465,80 @@
     return a;
   }
 
-  function setupSoal() {
-    const kolomKiri = document.getElementById('kolomKiri');
-    const kolomKanan = document.getElementById('kolomKanan');
-    kolomKiri.innerHTML = '<div class="kolom-title">📌 Pernyataan</div>';
-    kolomKanan.innerHTML = '<div class="kolom-title"> Jawaban</div>';
-
-    const kananAcak = shuffle(pasanganSoal);
-
-    pasanganSoal.forEach((p, i) => {
-      const div = document.createElement('div');
-      div.className = 'item';
-      div.textContent = p.kiri;
-      div.dataset.pasangan = p.kanan;
-      div.dataset.sisi = 'kiri';
-      div.dataset.id = i;
-      div.onclick = () => klikItem(div);
-      kolomKiri.appendChild(div);
-    });
-
-    kananAcak.forEach((p, i) => {
-      const div = document.createElement('div');
-      div.className = 'item';
-      div.textContent = p.kanan;
-      div.dataset.pasangan = p.kiri;
-      div.dataset.sisi = 'kanan';
-      div.dataset.id = i;
-      div.onclick = () => klikItem(div);
-      kolomKanan.appendChild(div);
-    });
-  }
-
-  function klikItem(el) {
-    if (el.classList.contains('matched')) return;
-
-    if (!selectedItem) {
-      selectedItem = el;
-      el.classList.add('selected');
-    } else {
-      if (selectedItem === el) {
-        el.classList.remove('selected');
-        selectedItem = null;
-        return;
-      }
-      if (selectedItem.dataset.sisi === el.dataset.sisi) {
-        selectedItem.classList.remove('selected');
-        selectedItem = el;
-        el.classList.add('selected');
-        return;
-      }
-
-      // Cek kecocokan
-      const cocok = selectedItem.dataset.pasangan === el.textContent || 
-                    el.dataset.pasangan === selectedItem.textContent;
-      
-      if (cocok) {
-        selectedItem.classList.remove('selected');
-        selectedItem.classList.add('matched');
-        el.classList.add('matched');
-        jawabanSiswa[selectedItem.textContent] = el.textContent;
-        matchedCount++;
-        updateProgress();
-        selectedItem = null;
-
-        if (matchedCount === totalSoal) {
-          document.getElementById('btnSelesai').disabled = false;
-        }
-      } else {
-        selectedItem.classList.add('wrong');
-        el.classList.add('wrong');
-        setTimeout(() => {
-          selectedItem.classList.remove('wrong', 'selected');
-          el.classList.remove('wrong');
-          selectedItem = null;
-        }, 500);
-      }
+  function tampilkanSoal() {
+    if (soalSekarang >= totalSoal) {
+      selesaiKuis();
+      return;
     }
-  }
 
-  function updateProgress() {
-    const persen = Math.round((matchedCount / totalSoal) * 100);
-    document.getElementById('progressText').textContent = `${matchedCount} / ${totalSoal}`;
+    const soal = daftarSoal[soalSekarang];
+    const container = document.getElementById('soalContainer');
+    
+    // Update progress
+    const persen = Math.round(((soalSekarang + 1) / totalSoal) * 100);
+    document.getElementById('progressText').textContent = `${soalSekarang + 1} / ${totalSoal}`;
     const fill = document.getElementById('progressFill');
     fill.style.width = persen + '%';
     fill.textContent = persen + '%';
+
+    // Acak urutan pilihan
+    const pilihanAcak = shuffle(soal.pilihan);
+
+    // Render soal
+    container.innerHTML = `
+      <div class="soal-card">
+        <div class="soal-label">Pertanyaan ${soalSekarang + 1}:</div>
+        <div class="soal-teks">${soal.soal}</div>
+      </div>
+      <div class="pilihan-container" id="pilihanContainer">
+        ${pilihanAcak.map((p, i) => `
+          <div class="pilihan" data-jawaban="${p}" onclick="pilihJawaban(this)">
+            ${String.fromCharCode(65 + i)}. ${p}
+          </div>
+        `).join('')}
+      </div>
+    `;
   }
 
-  async function selesaiMengerjakan() {
+  function pilihJawaban(el) {
+    // Cegah klik ganda
+    if (el.classList.contains('selected')) return;
+    
+    const semuaPilihan = document.querySelectorAll('.pilihan');
+    semuaPilihan.forEach(p => p.style.pointerEvents = 'none');
+
+    // Tandai pilihan
+    el.classList.add('selected');
+
+    // Cek jawaban (tanpa memberi tahu siswa)
+    const jawabanDipilih = el.dataset.jawaban;
+    const soal = daftarSoal[soalSekarang];
+    const benar = jawabanDipilih === soal.jawaban;
+    
+    if (benar) jumlahBenar++;
+
+    // Simpan jawaban
+    jawabanSiswa.push({
+      soal: soal.soal,
+      jawaban: jawabanDipilih,
+      benar: benar
+    });
+
+    // Lanjut ke soal berikutnya setelah jeda singkat
+    soalSekarang++;
+    setTimeout(() => {
+      tampilkanSoal();
+    }, 400);
+  }
+
+  function selesaiKuis() {
     const nama = document.getElementById('namaSiswa').value.trim();
-    const nilai = matchedCount * 10;
+    const nilai = jumlahBenar * 10;
     
     // Tampilkan hasil
     document.getElementById('resultNama').textContent = nama;
     document.getElementById('resultNilai').textContent = nilai;
+    document.getElementById('resultBenar').textContent = jumlahBenar;
     
     let emoji, title, pesan;
     if (nilai === 100) {
@@ -520,7 +548,7 @@
     } else if (nilai >= 60) {
       emoji = '😊'; title = 'Bagus!'; pesan = 'Terus berlatih ya! 📚';
     } else {
-      emoji = '💪'; title = 'Semangat!'; pesan = 'Ayo baca materinya lagi! 📖';
+      emoji = '💪'; title = 'Semangat!'; pesan = 'Ayo baca materinya lagi! ';
     }
     document.getElementById('resultEmoji').textContent = emoji;
     document.getElementById('resultTitle').textContent = title;
@@ -529,10 +557,11 @@
 
     // Kirim ke Google Spreadsheet
     try {
-      const detailJawaban = Object.entries(jawabanSiswa)
-        .map(([k,v]) => `${k} → ${v}`).join('; ');
+      const detailJawaban = jawabanSiswa
+        .map((j, i) => `${i+1}. ${j.soal} → ${j.jawaban} (${j.benar ? '✓' : ''})`)
+        .join('; ');
       
-      await fetch(GOOGLE_SCRIPT_URL, {
+      fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
@@ -540,7 +569,7 @@
           timestamp: new Date().toLocaleString('id-ID'),
           nama: nama,
           nilai: nilai,
-          jumlahBenar: matchedCount,
+          jumlahBenar: jumlahBenar,
           totalSoal: totalSoal,
           detail: detailJawaban
         })
@@ -553,4 +582,3 @@
 </script>
 </body>
 </html>
-
