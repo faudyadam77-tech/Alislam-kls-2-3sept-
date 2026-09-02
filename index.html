@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌟 Belajar Jujur, Disiplin & Amanah 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Fredoka', sans-serif; }
+  body {
+    background: linear-gradient(135deg, #ffe0ec 0%, #fff4cc 50%, #d4f1ff 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #ff6b9d, #ffa500);
+    color: white;
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(255,107,157,0.4);
+    margin-bottom: 25px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .header h1 { font-size: 2em; margin-bottom: 5px; }
+  .header p { font-size: 1.1em; }
+
+  /* Form Nama */
+  .name-box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    text-align: center;
+    border: 3px dashed #ff6b9d;
+  }
+  .name-box label { font-size: 1.3em; color: #ff6b9d; font-weight: 600; }
+  .name-box input {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    border: 3px solid #ffd166;
+    border-radius: 15px;
+    margin: 10px;
+    width: 70%;
+    outline: none;
+    font-family: 'Fredoka', sans-serif;
+  }
+  .name-box input:focus { border-color: #ff6b9d; }
+  .btn-mulai {
+    background: linear-gradient(135deg, #06d6a0, #118ab2);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(6,214,160,0.4);
+    transition: transform 0.2s;
+  }
+  .btn-mulai:hover { transform: scale(1.05); }
+
+  /* Materi Cards */
+  .materi-section { display: none; }
+  .materi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .materi-card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border-top: 6px solid;
+    transition: transform 0.3s;
+  }
+  .materi-card:hover { transform: translateY(-5px) rotate(-1deg); }
+  .materi-card.jujur { border-color: #ff6b9d; }
+  .materi-card.disiplin { border-color: #118ab2; }
+  .materi-card.amanah { border-color: #06d6a0; }
+  .materi-card .emoji { font-size: 3em; text-align: center; margin-bottom: 10px; }
+  .materi-card h3 {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  .materi-card.jujur h3 { color: #ff6b9d; }
+  .materi-card.disiplin h3 { color: #118ab2; }
+  .materi-card.amanah h3 { color: #06d6a0; }
+  .materi-card ul { list-style: none; padding: 0; }
+  .materi-card li {
+    padding: 6px 0;
+    border-bottom: 2px dotted #eee;
+    font-size: 0.95em;
+  }
+  .materi-card li:last-child { border: none; }
+  .materi-card li::before { content: "✨ "; }
+
+  /* Soal Section */
+  .soal-section {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border: 4px solid #ffd166;
+  }
+  .soal-section h2 {
+    text-align: center;
+    color: #ff6b9d;
+    margin-bottom: 15px;
+    font-size: 1.6em;
+  }
+  .instruksi {
+    background: #fff4cc;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1em;
+    color: #856404;
+  }
+  .matching-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  .kolom { display: flex; flex-direction: column; gap: 10px; }
+  .kolom-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1em;
+    padding: 8px;
+    border-radius: 10px;
+    color: white;
+  }
+  .kolom-kiri .kolom-title { background: #ff6b9d; }
+  .kolom-kanan .kolom-title { background: #118ab2; }
+  
+  .item {
+    padding: 12px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.95em;
+    text-align: center;
+    transition: all 0.2s;
+    border: 3px solid transparent;
+    user-select: none;
+  }
+  .kolom-kiri .item { background: #ffe0ec; color: #c2185b; }
+  .kolom-kanan .item { background: #d4f1ff; color: #01579b; }
+  .item:hover { transform: scale(1.03); }
+  .item.selected {
+    border-color: #ffd166;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(255,209,102,0.5);
+  }
+  .item.matched {
+    background: #06d6a0 !important;
+    color: white !important;
+    border-color: #04a076;
+    cursor: default;
+    animation: pop 0.4s;
+  }
+  .item.wrong {
+    background: #ff4757 !important;
+    color: white !important;
+    animation: shake 0.4s;
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  /* Progress */
+  .progress-box {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .progress-bar {
+    background: #eee;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    background: linear-gradient(90deg, #06d6a0, #ffd166);
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.85em;
+  }
+
+  .btn-selesai {
+    display: block;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #ff6b9d, #ffa500);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 6px 15px rgba(255,107,157,0.4);
+    transition: transform 0.2s;
+  }
+  .btn-selesai:hover { transform: scale(1.05); }
+  .btn-selesai:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Modal Hasil */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal.show { display: flex; }
+  .modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    animation: pop 0.5s;
+  }
+  .modal-content .big-emoji { font-size: 4em; }
+  .modal-content h2 { color: #ff6b9d; margin: 10px 0; }
+  .nilai-display {
+    font-size: 3.5em;
+    font-weight: 700;
+    color: #06d6a0;
+    margin: 15px 0;
+  }
+  .modal-content p { font-size: 1.1em; margin: 8px 0; }
+  .btn-tutup {
+    background: #118ab2;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 15px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.4em; }
+    .matching-container { grid-template-columns: 1fr; }
+    .item { font-size: 0.85em; padding: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🌟 Belajar Jujur, Disiplin & Amanah 🌟</h1>
+    <p>Bab 3 - Al-Islam | Kelas 2 SD</p>
+  </div>
+
+  <!-- FORM NAMA -->
+  <div class="name-box" id="nameBox">
+    <label>👋 Halo adik-adik! Siapa namamu?</label><br>
+    <input type="text" id="namaSiswa" placeholder="Tulis namamu di sini...">
+    <br>
+    <button class="btn-mulai" onclick="mulaiBelajar()"> Mulai Belajar!</button>
+  </div>
+
+  <!-- MATERI -->
+  <div class="materi-section" id="materiSection">
+    <div class="materi-grid">
+      <div class="materi-card jujur">
+        <div class="emoji">️</div>
+        <h3>JUJUR (Siddiq)</h3>
+        <ul>
+          <li>Berkata sesuai kenyataan</li>
+          <li>Tidak boleh berbohong/dusta</li>
+          <li>Sifat Nabi Muhammad </li>
+          <li>Hidup jadi tenang & sukses</li>
+        </ul>
+      </div>
+      <div class="materi-card disiplin">
+        <div class="emoji">⏰</div>
+        <h3>DISIPLIN</h3>
+        <ul>
+          <li>Patuh pada aturan</li>
+          <li>Tepat waktu</li>
+          <li>Mengerjakan tugas dengan baik</li>
+          <li>Hidup jadi teratur & berkarakter</li>
+        </ul>
+      </div>
+      <div class="materi-card amanah">
+        <div class="emoji"></div>
+        <h3>AMANAH (Al-Amin)</h3>
+        <ul>
+          <li>Bisa dipercaya orang lain</li>
+          <li>Tidak berkhianat</li>
+          <li>Gelar Nabi Muhammad ﷺ</li>
+          <li>Ada 3 macam: Allah, sesama, diri sendiri</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SOAL MENCOCOKKAN -->
+    <div class="soal-section">
+      <h2>🎯 Ayo Mencocokkan! 🎯</h2>
+      <div class="instruksi">
+        💡 <b>Cara main:</b> Klik 1 kotak di kiri, lalu klik pasangannya di kanan. Kalau benar, warnanya jadi hijau! 
+      </div>
+
+      <div class="progress-box">
+        <b>Progress:</b> <span id="progressText">0 / 10</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill">0%</div>
+        </div>
+      </div>
+
+      <div class="matching-container">
+        <div class="kolom kolom-kiri" id="kolomKiri"></div>
+        <div class="kolom kolom-kanan" id="kolomKanan"></div>
+      </div>
+
+      <button class="btn-selesai" id="btnSelesai" onclick="selesaiMengerjakan()" disabled>
+        📤 Kirim Jawaban & Lihat Nilai
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL HASIL -->
+  <div class="modal" id="modalHasil">
+    <div class="modal-content">
+      <div class="big-emoji" id="resultEmoji"></div>
+      <h2 id="resultTitle">Hebat!</h2>
+      <p>Nama: <b id="resultNama">-</b></p>
+      <div class="nilai-display" id="resultNilai">0</div>
+      <p id="resultPesan">Terus belajar ya!</p>
+      <button class="btn-tutup" onclick="location.reload()">🔄 Main Lagi</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ============ KONFIGURASI ============
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPXCJfjWc3u3zIYCDJC_izuIMSUrSG0Oug_2KqeBVPrzNCL7k1xBPE36VQjBVtLnCkoA/exec";
+
+  // ============ DATA SOAL ============
+  const pasanganSoal = [
+    { kiri: "Jujur", kanan: "Berkata sesuai kenyataan" },
+    { kiri: "Siddiq", kanan: "Sifat jujur Nabi Muhammad ﷺ" },
+    { kiri: "Dusta", kanan: "Lawan kata jujur" },
+    { kiri: "Disiplin", kanan: "Patuh pada aturan" },
+    { kiri: "Tepat waktu", kanan: "Ciri sikap disiplin" },
+    { kiri: "Amanah", kanan: "Bisa dipercaya" },
+    { kiri: "Al-Amin", kanan: "Gelar Nabi Muhammad ﷺ" },
+    { kiri: "Khianat", kanan: "Lawan kata amanah" },
+    { kiri: "3 macam amanah", kanan: "Allah, sesama, diri sendiri" },
+    { kiri: "Manfaat disiplin", kanan: "Hidup teratur & berkarakter" }
+  ];
+
+  let selectedItem = null;
+  let matchedCount = 0;
+  const totalSoal = pasanganSoal.length;
+  const jawabanSiswa = {};
+
+  // ============ FUNGSI ============
+  function mulaiBelajar() {
+    const nama = document.getElementById('namaSiswa').value.trim();
+    if (nama === '') {
+      alert('⚠️ Isi namamu dulu ya! 😊');
+      return;
+    }
+    document.getElementById('nameBox').style.display = 'none';
+    document.getElementById('materiSection').style.display = 'block';
+    setupSoal();
+  }
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function setupSoal() {
+    const kolomKiri = document.getElementById('kolomKiri');
+    const kolomKanan = document.getElementById('kolomKanan');
+    kolomKiri.innerHTML = '<div class="kolom-title">📌 Pernyataan</div>';
+    kolomKanan.innerHTML = '<div class="kolom-title"> Jawaban</div>';
+
+    const kananAcak = shuffle(pasanganSoal);
+
+    pasanganSoal.forEach((p, i) => {
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.textContent = p.kiri;
+      div.dataset.pasangan = p.kanan;
+      div.dataset.sisi = 'kiri';
+      div.dataset.id = i;
+      div.onclick = () => klikItem(div);
+      kolomKiri.appendChild(div);
+    });
+
+    kananAcak.forEach((p, i) => {
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.textContent = p.kanan;
+      div.dataset.pasangan = p.kiri;
+      div.dataset.sisi = 'kanan';
+      div.dataset.id = i;
+      div.onclick = () => klikItem(div);
+      kolomKanan.appendChild(div);
+    });
+  }
+
+  function klikItem(el) {
+    if (el.classList.contains('matched')) return;
+
+    if (!selectedItem) {
+      selectedItem = el;
+      el.classList.add('selected');
+    } else {
+      if (selectedItem === el) {
+        el.classList.remove('selected');
+        selectedItem = null;
+        return;
+      }
+      if (selectedItem.dataset.sisi === el.dataset.sisi) {
+        selectedItem.classList.remove('selected');
+        selectedItem = el;
+        el.classList.add('selected');
+        return;
+      }
+
+      // Cek kecocokan
+      const cocok = selectedItem.dataset.pasangan === el.textContent || 
+                    el.dataset.pasangan === selectedItem.textContent;
+      
+      if (cocok) {
+        selectedItem.classList.remove('selected');
+        selectedItem.classList.add('matched');
+        el.classList.add('matched');
+        jawabanSiswa[selectedItem.textContent] = el.textContent;
+        matchedCount++;
+        updateProgress();
+        selectedItem = null;
+
+        if (matchedCount === totalSoal) {
+          document.getElementById('btnSelesai').disabled = false;
+        }
+      } else {
+        selectedItem.classList.add('wrong');
+        el.classList.add('wrong');
+        setTimeout(() => {
+          selectedItem.classList.remove('wrong', 'selected');
+          el.classList.remove('wrong');
+          selectedItem = null;
+        }, 500);
+      }
+    }
+  }
+
+  function updateProgress() {
+    const persen = Math.round((matchedCount / totalSoal) * 100);
+    document.getElementById('progressText').textContent = `${matchedCount} / ${totalSoal}`;
+    const fill = document.getElementById('progressFill');
+    fill.style.width = persen + '%';
+    fill.textContent = persen + '%';
+  }
+
+  async function selesaiMengerjakan() {
+    const nama = document.getElementById('namaSiswa').value.trim();
+    const nilai = matchedCount * 10;
+    
+    // Tampilkan hasil
+    document.getElementById('resultNama').textContent = nama;
+    document.getElementById('resultNilai').textContent = nilai;
+    
+    let emoji, title, pesan;
+    if (nilai === 100) {
+      emoji = '🏆'; title = 'SEMPURNA!'; pesan = 'Kamu luar biasa hebat! 🌟';
+    } else if (nilai >= 80) {
+      emoji = '🎉'; title = 'Hebat!'; pesan = 'Tinggal sedikit lagi sempurna! ';
+    } else if (nilai >= 60) {
+      emoji = '😊'; title = 'Bagus!'; pesan = 'Terus berlatih ya! 📚';
+    } else {
+      emoji = '💪'; title = 'Semangat!'; pesan = 'Ayo baca materinya lagi! 📖';
+    }
+    document.getElementById('resultEmoji').textContent = emoji;
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultPesan').textContent = pesan;
+    document.getElementById('modalHasil').classList.add('show');
+
+    // Kirim ke Google Spreadsheet
+    try {
+      const detailJawaban = Object.entries(jawabanSiswa)
+        .map(([k,v]) => `${k} → ${v}`).join('; ');
+      
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          timestamp: new Date().toLocaleString('id-ID'),
+          nama: nama,
+          nilai: nilai,
+          jumlahBenar: matchedCount,
+          totalSoal: totalSoal,
+          detail: detailJawaban
+        })
+      });
+      console.log('✅ Data berhasil terkirim ke spreadsheet guru');
+    } catch (e) {
+      console.error('❌ Gagal kirim:', e);
+    }
+  }
+</script>
+</body>
+</html>
+
