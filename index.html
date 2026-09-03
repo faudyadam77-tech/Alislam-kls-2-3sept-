@@ -12,7 +12,7 @@
     min-height: 100vh;
     padding: 20px;
   }
-  .container { max-width: 900px; margin: 0 auto; }
+  .container { max-width: 950px; margin: 0 auto; }
   
   /* Font khusus Arab */
   .arabic {
@@ -80,39 +80,71 @@
   .materi-section { display: none; }
   .materi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
     margin-bottom: 30px;
   }
   .materi-card {
     background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    border-top: 6px solid;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-top: 8px solid;
     transition: transform 0.3s;
+    position: relative;
+    overflow: hidden;
   }
-  .materi-card:hover { transform: translateY(-5px) rotate(-1deg); }
+  .materi-card:hover { transform: translateY(-8px) rotate(-1deg); }
   .materi-card.jujur { border-color: #ff6b9d; }
   .materi-card.disiplin { border-color: #118ab2; }
   .materi-card.amanah { border-color: #06d6a0; }
-  .materi-card .emoji { font-size: 3em; text-align: center; margin-bottom: 10px; }
+  
+  /* Dekorasi sudut card */
+  .materi-card::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+  .materi-card.jujur::before { background: #ff6b9d; }
+  .materi-card.disiplin::before { background: #118ab2; }
+  .materi-card.amanah::before { background: #06d6a0; }
+
+  .materi-card .emoji { font-size: 3.5em; text-align: center; margin-bottom: 10px; }
   .materi-card h3 {
     text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    font-size: 1.6em;
+    margin-bottom: 15px;
   }
   .materi-card.jujur h3 { color: #ff6b9d; }
   .materi-card.disiplin h3 { color: #118ab2; }
   .materi-card.amanah h3 { color: #06d6a0; }
-  .materi-card ul { list-style: none; padding: 0; }
-  .materi-card li {
-    padding: 6px 0;
-    border-bottom: 2px dotted #eee;
-    font-size: 0.95em;
+  
+  .materi-card .narasi {
+    font-size: 1em;
+    line-height: 1.7;
+    color: #444;
+    text-align: justify;
   }
-  .materi-card li:last-child { border: none; }
-  .materi-card li::before { content: "✨ "; }
+  .materi-card .narasi b {
+    color: #ff6b9d;
+  }
+  .materi-card.disiplin .narasi b { color: #118ab2; }
+  .materi-card.amanah .narasi b { color: #06d6a0; }
+
+  .materi-card .highlight-box {
+    background: #fff4cc;
+    border-left: 4px solid #ffa500;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-top: 12px;
+    font-size: 0.95em;
+    color: #856404;
+  }
 
   /* Quiz Section */
   .quiz-section {
@@ -220,9 +252,7 @@
     border-color: #ffd166;
     box-shadow: 0 4px 10px rgba(255,209,102,0.5);
   }
-  .pilihan:active {
-    transform: scale(0.98);
-  }
+  .pilihan:active { transform: scale(0.98); }
   .pilihan.selected {
     background: #118ab2;
     color: white;
@@ -282,6 +312,7 @@
     .pilihan-container { grid-template-columns: 1fr; }
     .pilihan { font-size: 0.9em; padding: 12px; }
     .soal-teks { font-size: 1.1em; }
+    .materi-card .narasi { font-size: 0.95em; }
   }
 </style>
 </head>
@@ -290,13 +321,13 @@
 
   <!-- HEADER -->
   <div class="header">
-    <h1> Belajar Jujur, Disiplin & Amanah 🌟</h1>
+    <h1>🌟 Belajar Jujur, Disiplin & Amanah 🌟</h1>
     <p>Bab 3 - Al-Islam | Kelas 2 SD</p>
   </div>
 
   <!-- FORM NAMA -->
   <div class="name-box" id="nameBox">
-    <label> Halo adik-adik! Siapa namamu?</label><br>
+    <label>👋 Halo adik-adik! Siapa namamu?</label><br>
     <input type="text" id="namaSiswa" placeholder="Tulis namamu di sini...">
     <br>
     <button class="btn-mulai" onclick="mulaiBelajar()">🚀 Mulai Belajar!</button>
@@ -305,36 +336,43 @@
   <!-- MATERI -->
   <div class="materi-section" id="materiSection">
     <div class="materi-grid">
+      
+      <!-- Card Jujur -->
       <div class="materi-card jujur">
-        <div class="emoji">️</div>
-        <h3>JUJUR (<span class="arabic">صِدِّيق</span>)</h3>
-        <ul>
-          <li>Berkata sesuai kenyataan</li>
-          <li>Tidak boleh berbohong/dusta</li>
-          <li>Sifat Nabi Muhammad <span class="arabic">ﷺ</span></li>
-          <li>Hidup jadi tenang & sukses</li>
-        </ul>
+        <div class="emoji">🤲</div>
+        <h3>1. JUJUR (<span class="arabic">صِدِّيق</span>)</h3>
+        <div class="narasi">
+          Sifat pertama adalah <b>jujur</b>. Jujur itu artinya kita selalu berkata dan bersikap sesuai dengan kenyataan, jadi kita sama sekali tidak boleh berbohong atau mendustakan sesuatu. Tahukah kalian, jujur ini adalah salah satu sifat Nabi Muhammad <span class="arabic">ﷺ</span> yang disebut dengan <b><span class="arabic">Siddiq</span></b>. 
+          <div class="highlight-box">
+            💡 Kalau kita membiasakan diri untuk selalu jujur, hidup kita akan terasa lebih <b>tenang dan bahagia</b>. Kita juga akan lebih mudah meraih <b>kesuksesan</b> dan terhindar dari rasa bersalah karena tidak pernah berbohong.
+          </div>
+        </div>
       </div>
+
+      <!-- Card Disiplin -->
       <div class="materi-card disiplin">
         <div class="emoji">⏰</div>
-        <h3>DISIPLIN</h3>
-        <ul>
-          <li>Patuh pada aturan</li>
-          <li>Tepat waktu</li>
-          <li>Mengerjakan tugas dengan baik</li>
-          <li>Hidup jadi teratur & berkarakter</li>
-        </ul>
+        <h3>2. DISIPLIN</h3>
+        <div class="narasi">
+          Sifat kedua adalah <b>disiplin</b>. Disiplin itu maksudnya kita patuh dan taat pada aturan yang berlaku, baik di rumah, di sekolah, maupun di lingkungan sekitar. Contohnya, kita selalu datang <b>tepat waktu</b>, mentaati peraturan, dan mengerjakan tugas dengan baik. 
+          <div class="highlight-box">
+            💡 Kalau kita melakukan hal ini terus-menerus, lama-lama akan menjadi <b>kebiasaan yang baik</b>. Anak yang disiplin pasti prestasinya di sekolah akan naik, hidupnya jadi lebih <b>teratur</b>, dan menjadi pribadi yang <b>berkarakter kuat</b>.
+          </div>
+        </div>
       </div>
+
+      <!-- Card Amanah -->
       <div class="materi-card amanah">
         <div class="emoji"></div>
-        <h3>AMANAH (<span class="arabic">الأَمِين</span>)</h3>
-        <ul>
-          <li>Bisa dipercaya orang lain</li>
-          <li>Tidak berkhianat</li>
-          <li>Gelar Nabi Muhammad <span class="arabic">ﷺ</span></li>
-          <li>Ada 3 macam: Allah, sesama, diri sendiri</li>
-        </ul>
+        <h3>3. AMANAH (<span class="arabic">الأَمِين</span>)</h3>
+        <div class="narasi">
+          Sifat yang tak kalah penting adalah <b>amanah</b>. Amanah berarti kita bisa dipercaya oleh orang lain. Kalau kita diberi tugas atau titipan, kita pasti menjaganya dengan baik dan tidak berkhianat. Nabi Muhammad <span class="arabic">ﷺ</span> itu sangat bisa dipercaya, sampai-sampai beliau dijuluki <b><span class="arabic">Al-Amin</span></b>. 
+          <div class="highlight-box">
+            💡 Amanah itu ada <b>tiga macam</b>, lho, yaitu amanah kepada Allah SWT, kepada sesama manusia, dan kepada diri sendiri. Jika kita menjadi anak yang amanah, orang lain akan mudah percaya kepada kita, kita jadi pribadi yang <b>berwibawa</b>, dan rasa <b>percaya diri</b> kita pun akan tumbuh dengan sendirinya.
+          </div>
+        </div>
       </div>
+
     </div>
 
     <div style="text-align:center; margin: 20px 0;">
@@ -348,7 +386,7 @@
   <div class="quiz-section" id="quizSection">
     <h2>🎯 Ayo Jawab Pertanyaan Berikut! 🎯</h2>
     <div class="instruksi">
-      💡 <b>Cara main:</b> Pilih 1 jawaban yang paling tepat. Langsung lanjut ke soal berikutnya ya!
+       <b>Cara main:</b> Pilih 1 jawaban yang paling tepat. Langsung lanjut ke soal berikutnya ya!
     </div>
 
     <div class="progress-box">
@@ -370,7 +408,7 @@
       <div class="nilai-display" id="resultNilai">0</div>
       <p id="resultPesan">Terus belajar ya!</p>
       <p style="font-size:0.9em; color:#888;">Jawaban benar: <b id="resultBenar">0</b> / 10</p>
-      <button class="btn-tutup" onclick="location.reload()">🔄 Main Lagi</button>
+      <button class="btn-tutup" onclick="location.reload()"> Main Lagi</button>
     </div>
   </div>
 
@@ -413,7 +451,7 @@
       jawaban: "Amanah"
     },
     {
-      soal: "Gelar Nabi Muhammad ﷺ",
+      soal: "Gelar Nabi Muhammad ",
       pilihan: ["Al-Amin", "Siddiq", "Amanah", "Disiplin"],
       jawaban: "Al-Amin"
     },
@@ -501,30 +539,25 @@
   }
 
   function pilihJawaban(el) {
-    // Cegah klik ganda
     if (el.classList.contains('selected')) return;
     
     const semuaPilihan = document.querySelectorAll('.pilihan');
     semuaPilihan.forEach(p => p.style.pointerEvents = 'none');
 
-    // Tandai pilihan
     el.classList.add('selected');
 
-    // Cek jawaban (tanpa memberi tahu siswa)
     const jawabanDipilih = el.dataset.jawaban;
     const soal = daftarSoal[soalSekarang];
     const benar = jawabanDipilih === soal.jawaban;
     
     if (benar) jumlahBenar++;
 
-    // Simpan jawaban
     jawabanSiswa.push({
       soal: soal.soal,
       jawaban: jawabanDipilih,
       benar: benar
     });
 
-    // Lanjut ke soal berikutnya setelah jeda singkat
     soalSekarang++;
     setTimeout(() => {
       tampilkanSoal();
@@ -535,30 +568,28 @@
     const nama = document.getElementById('namaSiswa').value.trim();
     const nilai = jumlahBenar * 10;
     
-    // Tampilkan hasil
     document.getElementById('resultNama').textContent = nama;
     document.getElementById('resultNilai').textContent = nilai;
     document.getElementById('resultBenar').textContent = jumlahBenar;
     
     let emoji, title, pesan;
     if (nilai === 100) {
-      emoji = '🏆'; title = 'SEMPURNA!'; pesan = 'Kamu luar biasa hebat! 🌟';
+      emoji = ''; title = 'SEMPURNA!'; pesan = 'Kamu luar biasa hebat! 🌟';
     } else if (nilai >= 80) {
-      emoji = '🎉'; title = 'Hebat!'; pesan = 'Tinggal sedikit lagi sempurna! ';
+      emoji = '🎉'; title = 'Hebat!'; pesan = 'Tinggal sedikit lagi sempurna! 💪';
     } else if (nilai >= 60) {
       emoji = '😊'; title = 'Bagus!'; pesan = 'Terus berlatih ya! 📚';
     } else {
-      emoji = '💪'; title = 'Semangat!'; pesan = 'Ayo baca materinya lagi! ';
+      emoji = '💪'; title = 'Semangat!'; pesan = 'Ayo baca materinya lagi! 📖';
     }
     document.getElementById('resultEmoji').textContent = emoji;
     document.getElementById('resultTitle').textContent = title;
     document.getElementById('resultPesan').textContent = pesan;
     document.getElementById('modalHasil').classList.add('show');
 
-    // Kirim ke Google Spreadsheet
     try {
       const detailJawaban = jawabanSiswa
-        .map((j, i) => `${i+1}. ${j.soal} → ${j.jawaban} (${j.benar ? '✓' : ''})`)
+        .map((j, i) => `${i+1}. ${j.soal} → ${j.jawaban} (${j.benar ? '✓' : '✗'})`)
         .join('; ');
       
       fetch(GOOGLE_SCRIPT_URL, {
